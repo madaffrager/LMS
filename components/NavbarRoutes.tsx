@@ -12,7 +12,7 @@ const NavbarRoutes = () => {
   const isPlayerPage = pathname?.includes('/chapter')
   return (
     <div className="flex gap-x-2 ml-auto">
-      {(isPlayerPage || isTeacherPage )? (<Link href="/"><Button size="sm" variant="ghost"><LogOut className="h-4 w-4 mr-2"/>Teacher Mode OFF</Button></Link>):(<div><Link href="/teacher/courses"><Button>Teacher Mode ON</Button></Link></div>)
+      {(isPlayerPage || isTeacherPage )? (<Link href="/"><Button size="sm" variant="ghost"><LogOut className="h-4 w-4 mr-2"/>Disable Teacher Mode</Button></Link>):(<div><Link href="/teacher/courses"><Button>Enable Teacher Mode</Button></Link></div>)
       }
       <UserButton />
     </div>
