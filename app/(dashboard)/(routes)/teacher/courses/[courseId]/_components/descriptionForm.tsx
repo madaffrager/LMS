@@ -11,15 +11,14 @@ import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-interface TitleFormProps{
-    initialData:{title:string},
+import { Textarea } from '@/components/ui/textarea'
+interface DescriptionFormProps{
+    initialData:{description:string},
     courseId:string
 }
-export const TitleForm = ({initialData,courseId}:TitleFormProps) => {
+export const DescriptionForm = ({initialData,courseId}:DescriptionFormProps) => {
   const formSchema = z.object({
-  title:z.string().min(1,{message:'Title is required '}).refine((value)=>value!==initialData.title,{ message:
-                "The title must be different",
-            })
+  description:z.string().min(1,{message:'Description is required '})
 })
   const [isEditing,setEditing] = useState(false)
   const toggleEdit = ()=>setEditing((current)=>!current)
@@ -33,7 +32,7 @@ const onSubmit = async(values: z.infer<typeof formSchema>)=>{
     try{
       await axios.patch(`/api/courses/${courseId}`,values)
       toggleEdit()
-      toast.success('Title updated!')
+      toast.success('Description updated!')
       router.refresh()
     }catch{
       toast.error('Something went wrong!')
@@ -42,12 +41,12 @@ const onSubmit = async(values: z.infer<typeof formSchema>)=>{
   return (
     <div className='mt-6 bg-slate-100 rounded-md p-4'>
         <div className='font-medium flex items-center justify-between'>
-          Course Title
+          Course Description
           <Button onClick={toggleEdit} variant='ghost'>
             {isEditing ? (<>Cancel</>):(<Pencil className='h-4 w-4 mr-2 cursor-pointer'/>)}
           </Button>
         </div>
-        {!isEditing ? (<p className='text-sm mt-2'>{initialData.title}</p>):(
+        {!isEditing ? (initialData.description===''?(<p className='text-sm mt-2'>{initialData.description}</p>):(<p className='text-sm italic mt-2'>No description</p>)):(
           <Form {...form}>
         <form
         onSubmit={form.handleSubmit(onSubmit)}
@@ -55,12 +54,12 @@ const onSubmit = async(values: z.infer<typeof formSchema>)=>{
         >
            <FormField
             control={form.control}
-            name='title'
+            name='description'
             
             render={({field})=>(
               <FormItem>
                 <FormControl>
-                  <Input disabled={isSubmitting} placeholder='e.g : Advanced Machine Learning' {...field}/>  
+                  <Textarea disabled={isSubmitting} placeholder='e.g : This course is about ...' {...field}/>  
                 </FormControl>
                 <FormMessage />
               </FormItem>
