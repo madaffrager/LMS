@@ -26,7 +26,7 @@ export const TitleForm = ({initialData,courseId}:TitleFormProps) => {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
   resolver:zodResolver(formSchema),
-  defaultValues:initialData
+  defaultValues:{title:''}
   })
   const {isSubmitting, isValid} = form.formState
 const onSubmit = async(values: z.infer<typeof formSchema>)=>{

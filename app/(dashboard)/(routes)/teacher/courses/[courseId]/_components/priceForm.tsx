@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Course } from '@prisma/client'
 import { formatPrice } from '@/lib/format'
+import { Badge } from '@/components/ui/badge'
 interface PriceFormProps{
     initialData:Course,
     courseId:string
@@ -47,7 +48,14 @@ const onSubmit = async(values: z.infer<typeof formSchema>)=>{
             {isEditing ? (<>Cancel</>):(initialData.price?(<Pencil className='h-4 w-4 mr-2 cursor-pointer'/>):(<Plus className='h-4 w-4 mr-2 cursor-pointer'/>))}
           </Button>
         </div>
-        {!isEditing ? (initialData.price?(<p className='text-sm mt-2 text-justify p-2'>{formatPrice(initialData.price)}</p>):(<p className='text-sm italic mt-2'>FREE</p>)):(
+        {!isEditing ? 
+          (initialData.price?
+            (<p className='text-sm mt-2 text-justify p-2'>{formatPrice(initialData.price)}</p>)
+            :
+            (<Badge>Free</Badge>)
+          )
+          :
+          (
           <Form {...form}>
         <form
         onSubmit={form.handleSubmit(onSubmit)}

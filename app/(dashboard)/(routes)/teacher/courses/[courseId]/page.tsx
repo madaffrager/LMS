@@ -9,24 +9,33 @@ import { ImageForm } from "./_components/imageForm";
 import { CategoryForm } from "./_components/categoryForm";
 import { PriceForm } from "./_components/priceForm";
 import { AttachmentForm } from "./_components/attachmentForm";
+import { ChapterForm } from "./_components/chapterForm";
 
 const CoursePage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
-
+    if (!userId) {
+      return redirect("/");
+    }
   const course = await db.course.findUnique({
-    where: { id: params.courseId },
+    where: { id: params.courseId, userId },
     include:{
       attachments:{
         orderBy:{
           createdAt:'desc'
         }
+      },
+      chapters:{
+        orderBy:{
+          position:'asc'
+        } 
       }
     }
   });
-  const categories = await db.category.findMany({orderBy:{name:'asc'}})
-      if (!course) {
+  if (!course) {
       return redirect("/");
     }
+  const categories = await db.category.findMany({orderBy:{name:'asc'}})
+      
 
   const requiredFields = [
     course.title,
@@ -34,6 +43,7 @@ const CoursePage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some(chapter=>chapter.isPublished)
   ];
   const totalFields =  requiredFields.length
   const completedFields = requiredFields.filter(Boolean).length;
@@ -70,7 +80,10 @@ const CoursePage = async ({ params }: { params: { courseId: string } }) => {
               <IconBadge icon={ListChecks}/>
               <h2 className="text-xl">Course Chapters</h2>
             </div>
-            <div>TODO: Chapters</div>
+            <ChapterForm 
+              initialData ={course}
+              courseId={course.id}
+           />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
