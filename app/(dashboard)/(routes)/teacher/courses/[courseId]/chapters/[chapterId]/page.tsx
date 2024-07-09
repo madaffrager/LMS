@@ -7,6 +7,9 @@ import { redirect } from "next/navigation"
 import { ChapterTitleForm } from "./_components/chapterTitleForm"
 import { ChapterDescriptionForm } from "./_components/chapterDescriptionForm"
 import { ChapterAccessForm } from "./_components/chapterAccessForm"
+import { ChapterVideoForm } from "./_components/chapterVideoForm"
+import { Banner } from "@/components/banner"
+import ChapterActions from "./_components/chapterActions"
 
 const ChapterIdPage = async({params}:{params:{courseId:string,chapterId:string}}) => {
     const {userId} = auth()
@@ -33,8 +36,11 @@ const ChapterIdPage = async({params}:{params:{courseId:string,chapterId:string}}
   ];
     const totalFields =  requiredFields.length
     const completedFields = requiredFields.filter(Boolean).length;
+    const isComplete = requiredFields.every(Boolean)
     const completionText =  `${completedFields}/${totalFields}`
   return (
+    <>
+      {!chapter.isPublished && <Banner variant='warning' label='This chapter is unpublished, it will not be visible in the course'/>}
       <div className="p-6">
         <div className="flex items-center justify-between">
             <div className="w-full">
@@ -49,6 +55,7 @@ const ChapterIdPage = async({params}:{params:{courseId:string,chapterId:string}}
                          <h1 className="text-2xl font-medium">Chapter Creation</h1>
                          <span className="text-sm text-slate-700">Complete all fields : {completionText}</span>
                     </div>
+                    <ChapterActions isPublished={chapter.isPublished} courseId={params.courseId} chapterId={params.chapterId} disabled={!isComplete}/>
                 </div>
             </div>
         </div>
@@ -63,7 +70,7 @@ const ChapterIdPage = async({params}:{params:{courseId:string,chapterId:string}}
             <div>
                 <div className="flex items-center gap-x-2">
                     <IconBadge icon={Eye} />
-                    <h2 className="text-xl">Access settings </h2>
+                    <h2 className="text-xl">Access settings</h2>
                 </div>
                 <ChapterAccessForm initialData={chapter} courseId={params.courseId} chapterId={params.chapterId}/>
             </div>
@@ -73,10 +80,12 @@ const ChapterIdPage = async({params}:{params:{courseId:string,chapterId:string}}
                 <IconBadge icon={Video} />
                 <h2 className="text-xl">Add a video</h2>
             </div>
+            <ChapterVideoForm initialData={chapter} courseId={params.courseId} chapterId={params.chapterId}/>
         </div>
         </div>
         
       </div>
+      </>
     )
 }
 

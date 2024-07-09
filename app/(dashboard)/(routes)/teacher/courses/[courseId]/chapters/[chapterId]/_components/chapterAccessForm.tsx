@@ -54,7 +54,7 @@ const onSubmit = async(values: z.infer<typeof formSchema>)=>{
           (initialData.isFree?
             (<div className='text-sm mt-2 text-justify p-2'><Badge>Free</Badge> for preview.</div>)
             :
-            (<p className='text-sm italic mt-2'><Badge>Paid</Badge></p>))
+            (<div className='text-sm italic mt-2'><Badge>Paid</Badge></div>))
           :
           (
           <Form {...form}>
