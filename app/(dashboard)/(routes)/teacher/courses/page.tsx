@@ -15,9 +15,6 @@ const CoursesPage = async () => {
   const courses = await db.course.findMany({where:{userId},orderBy:{createdAt:"desc"}})
   return (
     <div className="p-6">
-      {/* <Link href="/teacher/create">
-        <Button>New Course</Button>
-      </Link> */}
       <DataTable columns={columns} data={courses} />
     </div>
   );
