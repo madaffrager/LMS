@@ -1,6 +1,6 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 html,
 body,
 :root{
@@ -38,6 +38,15 @@ body,
 
       --radius: 0.5rem;
     }
+    @layer utilities {
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      .no-scrollbar {
+          -ms-overflow-style: none;  
+          scrollbar-width: none; 
+    }
+  }
 
     .dark {
       --background: 222.2 84% 4.9%;
