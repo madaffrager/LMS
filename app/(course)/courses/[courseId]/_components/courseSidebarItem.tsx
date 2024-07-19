@@ -1,6 +1,4 @@
-
 'use client'
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Lock,CheckCircle, PlayCircle } from "lucide-react";
