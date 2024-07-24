@@ -29,55 +29,61 @@ const SingleChapterPage = async ({params}:{params:{courseId:string, chapterId:st
           />
         )}
         {isLocked && (
-          <Banner
-            variant="warning"
-            label="This chapter is locked"
-          />
+          <Banner variant="warning" label="This chapter is locked" />
         )}
         <div className="flex flex-col max-w-4xl mx-auto pb-20">
-            <div className="p-4">
-                <VideoPlayer 
-                chapterId={params.chapterId}
-                title={chapter.title}
-                courseId={params.courseId}
-                nextChapterId={nextChapter?.id}
-                playbackId={muxData?.playbackId}
-                isLocked={isLocked}
-                completeOnEnd={completeOnEnd}
-                 />
+          <div className="p-4">
+            <VideoPlayer
+              chapterId={params.chapterId}
+              title={chapter.title}
+              courseId={params.courseId}
+              nextChapterId={nextChapter?.id}
+              playbackId={muxData?.playbackId}
+              isLocked={isLocked}
+              completeOnEnd={completeOnEnd}
+            />
+          </div>
+          <div>
+            <div className="p-4 flex flex-col md:flex-row items-center justify-between">
+              <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
+              {purchase || course.price === 0 ? (
+                <CourseProgressButton
+                  chapterId={params.chapterId}
+                  courseId={params.courseId}
+                  nextChapterId={nextChapter?.id}
+                  isCompleted={!!userProgress?.isCompleted}
+                />
+              ) : (
+                <CourseEnrollButton
+                  courseId={params.courseId}
+                  price={course.price!}
+                />
+              )}
             </div>
-            <div>
-                <div className="p-4 flex flex-col md:flex-row items-center justify-between">
-                    <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
-                    {(purchase || course.price===0)?(
-                    <CourseProgressButton
-                    chapterId={params.chapterId}
-                    courseId={params.courseId}
-                    nextChapterId={nextChapter?.id}
-                    isCompleted={!!userProgress?.isCompleted}/>):
-                    (
-                    <CourseEnrollButton
-                    courseId={params.courseId}
-                    price={course.price!}/>
-                    )
-                    }
-                </div>
-                <Separator/>
-                <Preview value={chapter.description!}/>
-                {!!attachments.length && (<>
-                <Separator/>
+            <Separator />
+            <Preview value={chapter.description!} />
+            {!!attachments.length && (
+              <>
+                <Separator />
+                <h2 className="text-xl font-semibold mt-4 mb-2">
+                  Course Attachments
+                </h2>
                 <div className="p-4">
-                    {attachments.map((attachment)=>(
-                    <a 
-                    className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
-                    href={attachment.url} 
-                    target="_blank" 
-                    key={attachment.id
-                    
-                    }><File/><p className="line-clamp-1">{attachment.name}</p></a>))}
+                  {attachments.map((attachment) => (
+                    <a
+                      className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                      href={attachment.url}
+                      target="_blank"
+                      key={attachment.id}
+                    >
+                      <File />
+                      <p className="line-clamp-1">{attachment.name}</p>
+                    </a>
+                  ))}
                 </div>
-                </>)}
-            </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     );
