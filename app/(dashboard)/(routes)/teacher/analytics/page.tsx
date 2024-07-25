@@ -2,8 +2,6 @@ import { getAnalytics } from '@/actions/getAnalytics'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { DataCard } from './_components/dataCard'
-import { ChartContainer, type ChartConfig } from '@/components/ui/chart';
-import { Bar, BarChart } from 'recharts';
 import { CourseChart } from './_components/courseChart';
 
 const AnalyticsPage = async () => {

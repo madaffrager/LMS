@@ -21,7 +21,6 @@ export const getAnalytics = async (userId:string)=>{
             name:courseTitle,
             total:total
         }))
-        
         const totalRevenue = data.reduce((acc,curr)=>acc+curr.total,0)
         const totalSales = purchases.length
         return {data,totalRevenue,totalSales}
