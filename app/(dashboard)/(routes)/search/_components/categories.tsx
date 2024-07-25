@@ -16,7 +16,7 @@ import {
   FcIdea,
 } from 'react-icons/fc';
 import { IconType } from "react-icons";
-import CategoryItem from "./categoryItem";
+import {CategoryItem} from "./categoryItem";
 interface CategoriesProps{
     items:Category[]
 }
