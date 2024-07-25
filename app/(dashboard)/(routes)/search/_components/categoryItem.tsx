@@ -10,7 +10,7 @@ interface CategoryItemProps{
     icon?:IconType,
     value?:string
 }
-const categoryItem = ({label,icon:Icon,value}:CategoryItemProps) => {
+export const categoryItem = ({label,icon:Icon,value}:CategoryItemProps) => {
   const pathname = usePathname()  
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -30,5 +30,3 @@ const categoryItem = ({label,icon:Icon,value}:CategoryItemProps) => {
     </Button>
   );
 }
-
-export default categoryItem
