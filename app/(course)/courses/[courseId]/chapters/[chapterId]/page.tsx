@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { Preview } from "@/components/preview"
 import { File } from "lucide-react"
 import { CourseProgressButton } from "./_components/courseProgressButton"
+import { YoutubePlayer } from "./_components/YoutubePlayer"
 
 const SingleChapterPage = async ({params}:{params:{courseId:string, chapterId:string}}) => {
     const {userId} = auth()
@@ -33,15 +34,19 @@ const SingleChapterPage = async ({params}:{params:{courseId:string, chapterId:st
         )}
         <div className="flex flex-col max-w-4xl mx-auto pb-20">
           <div className="p-4">
-            <VideoPlayer
-              chapterId={params.chapterId}
-              title={chapter.title}
-              courseId={params.courseId}
-              nextChapterId={nextChapter?.id}
-              playbackId={muxData?.playbackId}
-              isLocked={isLocked}
-              completeOnEnd={completeOnEnd}
-            />
+            {chapter.videoUrl?.includes('youtube') ? (
+              <YoutubePlayer url={chapter.videoUrl}/>
+            ) : (
+              <VideoPlayer
+                chapterId={params.chapterId}
+                title={chapter.title}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                playbackId={muxData?.playbackId}
+                isLocked={isLocked}
+                completeOnEnd={completeOnEnd}
+              />
+            )}
           </div>
           <div>
             <div className="p-4 flex flex-col md:flex-row items-center justify-between">

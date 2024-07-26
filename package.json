@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate && prisma migrate deploy && next build"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.0",
@@ -44,6 +44,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-quill": "^2.0.0",
+    "react-youtube": "^10.1.0",
     "recharts": "^2.12.7",
     "stripe": "^16.2.0",
     "tailwind-merge": "^2.3.0",
