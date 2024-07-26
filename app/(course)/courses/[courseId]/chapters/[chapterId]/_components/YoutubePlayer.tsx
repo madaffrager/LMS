@@ -1,8 +1,5 @@
 export function YoutubePlayer({url}:{url:string}) {
   return (
-    <video width="320" height="240" controls preload="none">
-      <source src={url} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <iframe width="560" height="315" src={url} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   );
 }
