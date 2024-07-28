@@ -1,7 +1,6 @@
 import { db } from "@/lib/db"
 import Navbar from "../(dashboard)/_components/Navbar";
 import Sidebar from "../(dashboard)/_components/sidebar";
-import { CoursesList } from "@/components/coursesList";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { CourseCard } from "@/components/courseCard";
 import Categories from "../(dashboard)/(routes)/search/_components/categories";
@@ -50,7 +49,7 @@ const courses = await db.course.findMany({
           <Carousel>
             <CarouselContent>
               {courses.map((item) => (
-                <CarouselItem>
+                <CarouselItem key={item.id}>
                   <CourseCard
                     key={item.id}
                     id={item.id}
