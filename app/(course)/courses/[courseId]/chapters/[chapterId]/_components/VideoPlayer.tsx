@@ -1,7 +1,5 @@
 
 'use client'
-
-import { useConfettiStore } from '@/hooks/useConfettiStore';
 import { cn } from '@/lib/utils';
 import MuxPlayer from '@mux/mux-player-react';
 import axios from 'axios';
