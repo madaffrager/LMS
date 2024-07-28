@@ -13,13 +13,24 @@ const NavbarRoutes = () => {
   const pathname = usePathname()
   const isTeacherPage = pathname?.startsWith('/teacher')
   const isCoursePage = pathname?.includes('/courses')
-  const isSearchPage = pathname === '/search'
+  const isSearchPage = pathname === '/search';
+  const isLandingPage = pathname === '/landing';
   return (
     <>
-    {isSearchPage && <div className="hidden md:block">
-      <SearchInput/>
-      </div>}
+      {(isSearchPage || isLandingPage) && (
+        <div className="hidden md:block">
+          <SearchInput />
+        </div>
+      )}
       <div className="flex gap-x-2 ml-auto">
+        {isLandingPage && (
+          <Link href="/sign-in">
+            <Button size="sm" variant="ghost">
+              <LogOut className="h-4 w-4 mr-2" />
+              Login
+            </Button>
+          </Link>
+        )}
         {isCoursePage || isTeacherPage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
@@ -27,13 +38,15 @@ const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : isTeacher(userId)?(
+        ) : isTeacher(userId) ? (
           <div>
             <Link href="/teacher/courses">
               <Button>Enable Teacher Mode</Button>
             </Link>
           </div>
-        ):<></>}
+        ) : (
+          <></>
+        )}
         <UserButton />
       </div>
     </>

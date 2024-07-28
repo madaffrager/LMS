@@ -1,6 +1,6 @@
 import { getDashboardCourses } from "@/actions/getDashboardCourses";
 import { CoursesList } from "@/components/coursesList";
-import { RedirectToSignIn, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {  SignedIn, SignedOut } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { CheckCircle, Clock } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -9,7 +9,7 @@ import { InfoCard } from "./_components/infoCard";
 export default async function Dashboard() {
   const {userId} = auth()
   if(!userId){
-    redirect('/sign-in')
+    redirect('/landing')
   }
   const {completedCourses,coursesInProgress} = await getDashboardCourses(userId)
   return (
@@ -33,9 +33,6 @@ export default async function Dashboard() {
           <CoursesList items={[...completedCourses, ...coursesInProgress]} />
         </div>
       </SignedIn>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
     </div>
   );
 }
