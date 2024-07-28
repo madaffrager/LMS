@@ -51,7 +51,7 @@ const SingleChapterPage = async ({params}:{params:{courseId:string, chapterId:st
           <div>
             <div className="p-4 flex flex-col md:flex-row items-center justify-between">
               <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
-              {purchase || course.price === 0 ? (
+              {purchase ||!course.price|| course.price === 0 ? (
                 <CourseProgressButton
                   chapterId={params.chapterId}
                   courseId={params.courseId}
